@@ -11,7 +11,9 @@
 
     <div class="flex h-screen">
 
-        <aside class="flex flex-col w-64 bg-white border-r border-gray-200">
+        <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
+
+        <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 flex flex-col w-64 bg-white border-r border-gray-200 -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
 
             <div class="p-6 border-b border-gray-200">
                 <img class="w-28 mx-auto mb-2" src="/logo/logo.png" alt="logo">
@@ -82,12 +84,19 @@
 
         <main class="flex-1 flex flex-col overflow-hidden">
 
-            <header class="p-8 flex justify-between items-start">
+            <div class="md:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200 sticky top-0 z-20">
+                <button onclick="openSidebar()" class="text-gray-600 hover:text-gray-900">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <span class="font-semibold text-gray-800">Fornecedores</span>
+            </div>
+
+            <header class="p-4 md:p-8 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800">Fornecedores</h2>
                     <p class="text-slate-600 text-lg font-light">Gerenciamento de fornecedores e contatos</p>
                 </div>
-                <button onclick="openModal()" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-medium flex items-center cursor-pointer hover:bg-gray-800 transition-all">
+                <button onclick="openModal()" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-medium flex items-center cursor-pointer hover:bg-gray-800 transition-all w-fit">
                     <span class="mr-2 text-xl">+</span> Novo Fornecedor
                 </button>
             </header>
@@ -103,7 +112,7 @@
 
             <!-- Tabela -->
             <section class="mx-3 mt-5 bg-white rounded-xl border-[0.1rem] border-gray-200 flex-1 overflow-auto">
-                <div class="overflow-hidden mt-5">
+                <div class="overflow-x-auto mt-5">
                     <table class="w-full text-left border-collapse">
                         <thead class="border-t-[0.1rem] border-b-[0.1rem] border-gray-100 hover:bg-gray-200 w-full">
                             <tr>
@@ -128,7 +137,7 @@
             <!-- Modal -->
             <section>
                 <div id="modal" class="fixed inset-0 backdrop-blur-xs bg-black/30 flex justify-center items-center overflow-auto p-5 hidden">
-                    <div class="bg-white p-8 mb-5 rounded-lg w-[550px]">
+                    <div class="bg-white p-6 md:p-8 mb-5 rounded-lg w-full max-w-[550px] mx-4">
                         <p id="modal-titulo" class="text-2xl mb-4 font-semibold">Novo Fornecedor</p>
 
                         <!-- Nome -->
@@ -138,7 +147,7 @@
                         </div>
 
                         <!-- Contato / Telefone -->
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label class="text-black font-bold block mb-2">Contato</label>
                                 <input id="f-contato" class="w-full bg-gray-200 p-2 rounded-lg focus:outline-2 focus:outline-blue-600" placeholder="Nome do responsável">
@@ -181,6 +190,19 @@
 
         </main>
     </div>
+
+    <script>
+        function openSidebar() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full')
+            document.getElementById('sidebar').classList.add('translate-x-0')
+            document.getElementById('sidebar-overlay').classList.remove('hidden')
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full')
+            document.getElementById('sidebar').classList.remove('translate-x-0')
+            document.getElementById('sidebar-overlay').classList.add('hidden')
+        }
+    </script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

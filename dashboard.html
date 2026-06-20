@@ -11,7 +11,9 @@
 
     <div class="flex h-screen">
 
-        <aside class="flex flex-col w-64 bg-white border-r border-gray-200">
+        <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
+
+        <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 flex flex-col w-64 bg-white border-r border-gray-200 -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
 
             <div class="p-6 border-b border-gray-200">
                 <img class="w-28 mx-auto mb-2" src="/logo/logo.png" alt="logo">
@@ -80,21 +82,30 @@
 
         </aside>
 
-        <main class="flex-1 p-8 overflow-y-auto">
-            <header class="mb-8 flex justify-between items-start">
+        <main class="flex-1 overflow-y-auto">
+
+            <div class="md:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200 sticky top-0 z-20">
+                <button onclick="openSidebar()" class="text-gray-600 hover:text-gray-900">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <span class="font-semibold text-gray-800">Painel</span>
+            </div>
+
+            <div class="p-4 md:p-8">
+            <header class="mb-8 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-start">
                 <div>
                     <h2 class="text-3xl font-bold">Painel</h2>
                     <p class="text-slate-600 text-lg font-light" id="loja-subtitulo">Visão geral do sistema de estoque</p>
                 </div>
                 <button onclick="window.location.href='selecionar-loja.html'"
-                    class="flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 border border-gray-200 hover:border-blue-300 px-3 py-2 rounded-lg transition-all">
+                    class="flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 border border-gray-200 hover:border-blue-300 px-3 py-2 rounded-lg transition-all w-fit">
                     <i class="fa-solid fa-store text-xs"></i>
                     Trocar loja
                 </button>
             </header>
 
             <!-- Cards de resumo -->
-            <div class="mt-5 grid w-full tablet:grid-cols-2 laptop:grid-cols-2 desktop:grid-cols-4 tablet:gap-3 laptop:gap-5">
+            <div class="mt-5 grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
                 <!-- Total de Produtos -->
                 <div class="bg-white px-5 py-4 rounded-xl border-[0.1rem] border-gray-200">
@@ -149,7 +160,7 @@
             </div>
 
             <!-- Movimentações + Gráfico -->
-            <div class="mt-5 grid w-full tablet:grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-2 tablet:gap-3 laptop:gap-5">
+            <div class="mt-5 grid w-full grid-cols-1 lg:grid-cols-2 gap-4">
 
                 <!-- Movimentações (Últimos 7 dias) -->
                 <div class="bg-white max-w-full rounded-xl border-[0.1rem] border-gray-200 p-5">
@@ -192,9 +203,23 @@
 
             </div>
 
+            </div><!-- /p-4 md:p-8 -->
         </main>
 
     </div>
+
+    <script>
+        function openSidebar() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full')
+            document.getElementById('sidebar').classList.add('translate-x-0')
+            document.getElementById('sidebar-overlay').classList.remove('hidden')
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full')
+            document.getElementById('sidebar').classList.remove('translate-x-0')
+            document.getElementById('sidebar-overlay').classList.add('hidden')
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
